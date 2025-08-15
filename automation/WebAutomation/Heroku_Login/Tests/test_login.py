@@ -22,8 +22,7 @@ class TestLogin:
         login_page.enter_username(herokuData["username"])
         login_page.enter_password(herokuData["password"])
         login_page.click_login()
-        #assert "You logged into a secure area!" in login_page.get_flash_message()
-        assert "67g" in login_page.get_flash_message()
+        assert "You logged into a secure area!" in login_page.get_flash_message()
 
 
     @allure.story("Invalid Login")
