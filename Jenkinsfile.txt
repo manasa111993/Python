@@ -1,0 +1,51 @@
+pipeline {
+    agent any
+
+    tools {
+        // This must match the name you set in Jenkins → Global Tool Configuration
+        allure 'allure'
+    }
+
+    triggers {
+        // Build periodically every night at 2 AM
+        cron('H 2 * * *')
+        // Poll GitHub every 5 minutes
+        pollSCM('H/5 * * * *')
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main',  // Change to 'master' if that's your branch
+                    url: 'https://github.com/manasa111993/Python.git'
+            }
+        }
+
+        stage('Setup Python Env') {
+            steps {
+                bat 'python -m venv venv'
+                bat 'venv\\Scripts\\activate && pip install --upgrade pip'
+                bat 'venv\\Scripts\\activate && pip install -r requirements.txt'
+            }
+        }
+
+        stage('Run Tests') {
+            steps {
+                bat 'venv\\Scripts\\activate && pytest --alluredir=allure-results'
+            }
+        }
+
+        stage('Publish Allure Report') {
+            steps {
+                allure includeProperties: false, jdk: '', results: [[path: 'allure-results']]
+            }
+        }
+    }
+
+    post {
+        always {
+            archiveArtifacts artifacts: 'allure-results/**', allowEmptyArchive: true
+            junit '**/junit.xml' // if you also use --junitxml= in pytest
+        }
+    }
+}
