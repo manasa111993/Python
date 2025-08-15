@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     tools {
-        // This must match the name you set in Jenkins → Global Tool Configuration
+        // Name must match the one you configured in Manage Jenkins → Global Tool Configuration
         allure 'allure'
     }
 
@@ -16,8 +16,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main',  // Change to 'master' if that's your branch
-                    url: 'https://github.com/manasa111993/Python.git'
+                git branch: 'main', url: 'https://github.com/manasa111993/Python.git'
             }
         }
 
@@ -29,9 +28,17 @@ pipeline {
             }
         }
 
-        stage('Run Tests') {
+        stage('Run Pytest') {
             steps {
+                // Generate BOTH Allure and JUnit reports
                 bat 'venv\\Scripts\\activate && pytest --alluredir=allure-results --junitxml=results.xml'
+                bat 'dir' // just to confirm results.xml is present
+            }
+        }
+
+        stage('Publish JUnit Report') {
+            steps {
+                junit 'results.xml'
             }
         }
 
@@ -40,17 +47,12 @@ pipeline {
                 allure includeProperties: false, jdk: '', results: [[path: 'allure-results']]
             }
         }
+    }
 
-        stage('Publish JUnit Report') {
-            steps {
-                junit 'results.xml' // Make sure file exists in workspace
-            }
+    post {
+        always {
+            echo "Cleaning up..."
+            deleteDir() // optional: cleans workspace
         }
     }
-        post {
-            always {
-                archiveArtifacts artifacts: 'allure-results/**', allowEmptyArchive: true
-                  junit '**/junit.xml' // if you also use --junitxml= in pytest
-            }
-        }
-    }
+}
