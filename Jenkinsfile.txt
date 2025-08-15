@@ -46,7 +46,7 @@ pipeline {
                 junit 'results.xml' // Make sure file exists in workspace
             }
         }
-
+    }
         post {
             always {
                 archiveArtifacts artifacts: 'allure-results/**', allowEmptyArchive: true
@@ -54,4 +54,3 @@ pipeline {
             }
         }
     }
-}
