@@ -31,7 +31,7 @@ pipeline {
 
         stage('Run Tests') {
             steps {
-                bat 'venv\\Scripts\\activate && pytest --alluredir=allure-results'
+                bat 'venv\\Scripts\\activate && pytest --alluredir=allure-results --junitxml=results.xml'
             }
         }
 
