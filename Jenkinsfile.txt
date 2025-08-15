@@ -40,12 +40,18 @@ pipeline {
                 allure includeProperties: false, jdk: '', results: [[path: 'allure-results']]
             }
         }
-    }
 
-    post {
-        always {
-            archiveArtifacts artifacts: 'allure-results/**', allowEmptyArchive: true
-            junit '**/junit.xml' // if you also use --junitxml= in pytest
+        stage('Publish JUnit Report') {
+            steps {
+                junit 'results.xml' // Make sure file exists in workspace
+            }
+        }
+
+        post {
+            always {
+                archiveArtifacts artifacts: 'allure-results/**', allowEmptyArchive: true
+                  junit '**/junit.xml' // if you also use --junitxml= in pytest
+            }
         }
     }
 }
