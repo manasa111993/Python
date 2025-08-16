@@ -22,9 +22,14 @@ pipeline {
 
         stage('Setup Python Env') {
             steps {
-                bat 'python -m venv venv'
-                bat 'venv\\Scripts\\activate && pip install --upgrade pip'
-                bat 'venv\\Scripts\\activate && pip install -r requirements.txt'
+                bat '''
+        python -m venv venv
+        venv\\Scripts\\activate && pip install --upgrade pip
+        if exist requirements.txt (
+            venv\\Scripts\\activate && pip install -r requirements.txt
+        )
+        venv\\Scripts\\activate && pip install pytest allure-pytest
+        '''
             }
         }
 
