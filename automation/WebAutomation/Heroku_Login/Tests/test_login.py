@@ -35,4 +35,4 @@ class TestLogin:
         login_page.enter_username(herokuData["wrong_user"])
         login_page.enter_password(herokuData["wrong_password"])
         login_page.click_login()
-        assert "Your username is invalid!" in login_page.get_flash_message()
+        assert "Your username is invalid" in login_page.get_flash_message()
