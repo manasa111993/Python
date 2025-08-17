@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     tools {
-        python 'Python3.13'
+        Python 'Python3.13'
         allure 'allure'
     }
 
