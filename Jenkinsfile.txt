@@ -45,14 +45,15 @@ pipeline {
                 }
             }
         }
+    }
 
-        post {
-            always {
-                junit 'results.xml'
-                allure includeProperties: false, jdk: '', results: [[path: 'allure-results']]
-                echo "Cleaning up..."
-                deleteDir()
-                }
+    post {
+        always {
+            junit 'results.xml'
+            allure includeProperties: false, jdk: '', results: [[path: 'allure-results']]
+            echo "Cleaning up..."
+            deleteDir()
             }
         }
-    }
+     }
+    
