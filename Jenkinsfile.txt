@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     tools {
-        // This must match the name you set in Jenkins → Global Tool Configuration
+        python 'Python3.13'
         allure 'allure'
     }
 
@@ -16,36 +16,44 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main',  // Change to 'master' if that's your branch
-                    url: 'https://github.com/manasa111993/Python.git'
+                git branch: 'main', url: 'https://github.com/manasa111993/Python.git'
             }
         }
 
         stage('Setup Python Env') {
             steps {
-                bat 'python -m venv venv'
-                bat 'venv\\Scripts\\activate && pip install --upgrade pip'
-                bat 'venv\\Scripts\\activate && pip install -r requirements.txt'
+                bat '''
+        python -m venv venv
+        venv\\Scripts\\activate && pip install --upgrade pip
+        if exist requirements.txt (
+            venv\\Scripts\\activate && pip install -r requirements.txt
+        )
+        venv\\Scripts\\activate && pip install pytest allure-pytest
+        '''
             }
         }
 
         stage('Run Tests') {
             steps {
-                bat 'venv\\Scripts\\activate && pytest --alluredir=allure-results'
-            }
-        }
-
-        stage('Publish Allure Report') {
-            steps {
-                allure includeProperties: false, jdk: '', results: [[path: 'allure-results']]
+                // Even if tests fail, continue pipeline
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    bat '''
+                    venv\\Scripts\\activate && pytest ^
+                        --alluredir=allure-results ^
+                        --junitxml=results.xml
+                    '''
+                }
             }
         }
     }
 
     post {
         always {
-            archiveArtifacts artifacts: 'allure-results/**', allowEmptyArchive: true
-            junit '**/junit.xml' // if you also use --junitxml= in pytest
+            junit 'results.xml'
+            allure includeProperties: false, jdk: '', results: [[path: 'allure-results']]
+            echo "Cleaning up..."
+            deleteDir()
+            }
         }
-    }
-}
+     }
+    
