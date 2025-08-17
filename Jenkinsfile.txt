@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     tools {
-        // Name must match the one you configured in Manage Jenkins → Global Tool Configuration
+        python 'Python3.13'
         allure 'allure'
     }
 
