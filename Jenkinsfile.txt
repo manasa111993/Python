@@ -33,31 +33,26 @@ pipeline {
             }
         }
 
-        stage('Run Pytest') {
+        stage('Run Tests') {
             steps {
-                // Generate BOTH Allure and JUnit reports
-                bat 'venv\\Scripts\\activate && pytest --alluredir=allure-results --junitxml=results.xml'
-                bat 'dir' // just to confirm results.xml is present
+                // Even if tests fail, continue pipeline
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    bat '''
+                    venv\\Scripts\\activate && pytest ^
+                        --alluredir=allure-results ^
+                        --junitxml=results.xml
+                    '''
+                }
             }
         }
 
-        stage('Publish JUnit Report') {
-            steps {
+        post {
+            always {
                 junit 'results.xml'
-            }
-        }
-
-        stage('Publish Allure Report') {
-            steps {
                 allure includeProperties: false, jdk: '', results: [[path: 'allure-results']]
+                echo "Cleaning up..."
+                deleteDir()
+                }
             }
         }
     }
-
-    post {
-        always {
-            echo "Cleaning up..."
-            deleteDir() // optional: cleans workspace
-        }
-    }
-}
