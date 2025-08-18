@@ -41,5 +41,4 @@ class TestLogin:
             login_page.click_login()
         with allure.step("Verify unsuccessful login"):
             # Verify that the flash message indicates an invalid login
-            #assert "Your username is invalid!" in login_page.get_flash_message()
-            assert "365365" in login_page.get_flash_message()
+            assert "Your username is invalid!" in login_page.get_flash_message()
