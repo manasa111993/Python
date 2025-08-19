@@ -1,6 +1,5 @@
 import pytest, json, os
-
-from BookAPIs.apis.library_api import LibraryAPI
+from automation.APIAutomation.BookAPIs.apis.library_api import LibraryAPI
 
 BASE_URL = "http://216.10.245.166"   # Rahul Shetty demo server
 

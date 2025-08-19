@@ -1,8 +1,9 @@
 # This file contains test cases for login functionality.
 import pytest
-from Heroku_Login.Data.data_file import herokuData
-from Heroku_Login.pages.login_page import HerokuLoginPage
 import allure
+from automation.WebAutomation.Heroku_Login.Data.data_file import herokuData
+from automation.WebAutomation.Heroku_Login.pages.login_page import HerokuLoginPage
+
 
 @allure.feature("Heroku Login Tests")
 @pytest.mark.usefixtures("invoke_browser")

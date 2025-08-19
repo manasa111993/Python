@@ -1,5 +1,5 @@
 import allure, jsonschema
-from BookAPIs.schema.schema import BOOK_SCHEMA
+from automation.APIAutomation.BookAPIs.schema.schema import BOOK_SCHEMA
 
 
 @allure.feature("Library API")

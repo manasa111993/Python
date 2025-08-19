@@ -4,13 +4,13 @@ import pytest
 import allure
 from selenium import webdriver
 
-# Clean allure-results before test run
+'''# Clean allure-results before test run
 @pytest.fixture(scope="session", autouse=True)
 def clean_allure_results():
     results_dir = os.path.join(os.getcwd(), "allure-results")
     if os.path.exists(results_dir):
         shutil.rmtree(results_dir)
-    os.makedirs(results_dir, exist_ok=True)
+    os.makedirs(results_dir, exist_ok=True)'''
 
 
 @pytest.fixture(scope="function")

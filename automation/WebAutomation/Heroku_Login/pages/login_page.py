@@ -1,5 +1,5 @@
-from Heroku_Login.locators.locators import LoginLocators
-from Heroku_Login.pages.base_page import BasePage
+from automation.WebAutomation.Heroku_Login.locators.locators import LoginLocators
+from automation.WebAutomation.Heroku_Login.pages.base_page import BasePage
 
 class HerokuLoginPage(BasePage):
     def __init__(self, driver):

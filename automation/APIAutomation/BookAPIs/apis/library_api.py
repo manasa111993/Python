@@ -1,4 +1,5 @@
-from BookAPIs.schema.client import APIClient
+#from BookAPIs.schema.client import APIClient
+from automation.APIAutomation.BookAPIs.schema.client import APIClient
 
 
 class LibraryAPI(APIClient):
