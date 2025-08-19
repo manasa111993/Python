@@ -1,0 +1,20 @@
+[
+  {
+    "name": "Python Basics",
+    "isbn": "PB101",
+    "aisle": "1001",
+    "author": "Author One"
+  },
+  {
+    "name": "API Automation",
+    "isbn": "AA202",
+    "aisle": "2002",
+    "author": "Author Two"
+  },
+  {
+    "name": "Pytest Framework",
+    "isbn": "PF303",
+    "aisle": "3003",
+    "author": "Author Three"
+  }
+]
