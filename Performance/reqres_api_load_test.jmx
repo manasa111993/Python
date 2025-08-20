@@ -66,7 +66,32 @@
         <hashTree/>
 
         <!-- POST User Request -->
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="POST User" enabled="true">
+<HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="POST User" enabled="true">
+    <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+        <collectionProp name="Arguments.arguments">
+            <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{ "name": "morpheus", "job": "leader" }</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+                <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                <stringProp name="Argument.name"></stringProp>
+            </elementProp>
+        </collectionProp>
+    </elementProp>
+    <stringProp name="HTTPSampler.domain">reqres.in</stringProp>
+    <stringProp name="HTTPSampler.port"></stringProp>
+    <stringProp name="HTTPSampler.protocol">https</stringProp>
+    <stringProp name="HTTPSampler.path">/api/users</stringProp>
+    <stringProp name="HTTPSampler.method">POST</stringProp>
+    <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+    <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+    <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+    <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+    <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+    <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+    <stringProp name="HTTPSampler.response_timeout"></stringProp>
+</HTTPSamplerProxy>
+
           <stringProp name="HTTPSampler.domain"></stringProp>
           <stringProp name="HTTPSampler.port"></stringProp>
           <stringProp name="HTTPSampler.protocol"></stringProp>
