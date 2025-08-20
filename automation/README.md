@@ -27,3 +27,5 @@ This project automates testing of public APIs (Reqres, Rahul Shetty APIs).
   - API schema validation
   - Negative & edge case coverage
 
+
+<img width="1871" height="1045" alt="image" src="https://github.com/user-attachments/assets/16d41ec6-4b2b-416f-bdc8-18ad873158af" />
